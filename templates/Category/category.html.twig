@@ -6,30 +6,28 @@
     <link href="../../css/index.css" rel="stylesheet">
     <link href="../../css/category.css" rel="stylesheet">
 {% endblock %}
-    {% block body %}
-        <h1 class="category-name">{{ title }} news</h1>
-    <main class="index" role="main">
-        <div class="main-post">
-            <img class="post-image" src="../../img/default.png" alt="">
-            <small class="text-muted">1 min ago</small>
-            <p class="post-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores debitis eligendi expedita inventore laborum nihil officiis, repudiandae suscipit! Obcaecati, quibusdam.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores debitis eligendi expedita inventore laborum nihil officiis, repudiandae suscipit! Obcaecati, quibusdam.
-            </p>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Read more</button>
-            <div class="clearfix"></div>
-        </div>
-        <div class="main-post">
-            <img class="post-image" src="../../img/default.png" alt="">
-            <small class="text-muted">1 min ago</small>
-            <p class="post-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores debitis eligendi expedita inventore laborum nihil officiis, repudiandae suscipit! Obcaecati, quibusdam.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores debitis eligendi expedita inventore laborum nihil officiis, repudiandae suscipit! Obcaecati, quibusdam.
-            </p>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Read more</button>
-            <div class="clearfix"></div>
-        </div>
-    </main>
+{% block body %}
+    <h1 class="category-name">{{ title }} news</h1>
+    <h2 class="category-description">{{ title }} description</h2>
+    <div class="row mb-2">
+        {% for post in posts %}
+        <div class="col-md-4">
+             <div class="card mb-4 shadow-sm">
+                  <img class="card-img-top" src={{ post.getImage }} alt="">
+                        <div class="card-body">
+                             <p class="card-text">
+                                  {{ post.getDescription }}
+                             </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary">Read</button>
+                            </div>
+                         <small class="text-muted">{{ post.getPublicationDate.format("d.m.Y H:i") }}</small>
+                         </div>
+                         </div>
+              </div>
+         </div>
+        {% endfor %}
 {% endblock %}
 {% block categories %}
     <ul class="categories">

@@ -24,6 +24,6 @@ final class CategoryController extends AbstractController
     public function show($slug, CategoryPageServiceInterface $service): Response
     {
         $posts = $service->getPosts();
-        return $this->render('Category/category.html.twig', ['title' => ucfirst($slug)]);
+        return $this->render('Category/category.html.twig', ['title' => ucfirst($slug), 'posts' => $posts]);
     }
 }

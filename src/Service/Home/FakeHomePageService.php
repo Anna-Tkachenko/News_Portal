@@ -15,7 +15,7 @@ use App\Post\PostsCollection;
  *
  * @author Vladimir Kuprienko <vldmr.kuprienko@gmail.com>
  */
-final class FakeHomeService implements HomePageServiceInterface
+final class FakeHomePageService implements HomePageServiceInterface
 {
     private const POSTS_COUNT = 4;
     /**

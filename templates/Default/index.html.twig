@@ -2,17 +2,17 @@
 {% block title %}News Portal{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="css/site.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
 {% endblock %}
 {% block body %}
     <main class="index" role="main">
+        {% set mainPost = posts.shift %}
         <div class="main-post">
-            <img class="post-image" src="img/default.png" alt="">
-            <small class="text-muted">1 min ago</small>
+            <img class="post-image" src="{{ mainPost.image == 'default.png' ? ('/img/' . mainPost.image) : mainPost.image }}" alt="">
+            <small class="text-muted">{{ mainPost.publicationDate }}</small>
             <p class="post-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores debitis eligendi expedita inventore laborum nihil officiis, repudiandae suscipit! Obcaecati, quibusdam.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores debitis eligendi expedita inventore laborum nihil officiis, repudiandae suscipit! Obcaecati, quibusdam.
+                {{ mainPost.description }}
             </p>
             <button type="button" class="btn btn-sm btn-outline-secondary">Read more</button>
             <div class="clearfix"></div>
@@ -20,54 +20,24 @@
         <div class="py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <img class="card-img-top" src="img/default.png" alt="">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores debitis eligendi expedita inventore laborum nihil officiis, repudiandae suscipit! Obcaecati, quibusdam.
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Read</button>
+                    {% for post in posts %}
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img class="card-img-top" src="{{ post.image == 'default.png' ? ('/img/' . post.image) : post.image }}" alt="">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        {{ post.description }}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Read</button>
+                                        </div>
+                                        <small class="text-muted">{{ post.publicationDate }}</small>
                                     </div>
-                                    <small class="text-muted">9 mins ago</small>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <img class="card-img-top" src="img/default.png" alt="">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, illo!
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Read</button>
-                                    </div>
-                                    <small class="text-muted">1 hour ago</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <img class="card-img-top" src="img/default.png" alt="">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis esse expedita explicabo ipsam magni officiis.
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Read</button>
-                                    </div>
-                                    <small class="text-muted">2 days ago</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

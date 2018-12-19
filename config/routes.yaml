@@ -4,3 +4,6 @@ index:
 category:
   path: /category/{slug}
   controller: App\Controller\CategoryController::show
+contacts:
+  path: /contacts
+  controller: App\Controller\ContactsController::index

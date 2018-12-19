@@ -1,14 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tkachenko
- * Date: 12/16/18
- * Time: 11:00 PM
+
+/*
+ * This file is part of the News-Portal project.
+ * (c) Anna Tkachenko <tkachenko.anna835@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Controller;
 
-use App\Service\Home\HomePageServiceInterface;
 use App\Service\Category\CategoryPageServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -21,14 +21,13 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class CategoryController extends AbstractController
 {
-
     public function show($slug, CategoryPageServiceInterface $service): Response
     {
         $posts = $service->getPosts();
         try {
             $categoryModel = $service->getCategoryInfo($slug);
-        } catch(\LogicException $e){
-           throw $this->createNotFoundException('Supported category does not exist');
+        } catch (\LogicException $e) {
+            throw $this->createNotFoundException('Supported category does not exist');
         }
 
         return $this->render('category/show.html.twig', [

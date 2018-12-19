@@ -1,9 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tkachenko
- * Date: 12/16/18
- * Time: 9:53 PM
+
+/*
+ * This file is part of the News-Portal project.
+ * (c) Anna Tkachenko <tkachenko.anna835@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Service\Category;
@@ -58,7 +59,7 @@ final class FakeCategoryService implements CategoryPageServiceInterface
 
     public function getCategoryInfo($categoryName): array
     {
-        if(isset($this->storage[$categoryName])){
+        if (isset($this->storage[$categoryName])) {
             return $this->storage[$categoryName];
         } else {
             throw new \LogicException(sprintf('Category %s does not exist.', $categoryName));

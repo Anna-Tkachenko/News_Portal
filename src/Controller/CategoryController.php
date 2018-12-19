@@ -11,6 +11,7 @@ namespace App\Controller;
 use App\Service\Home\HomePageServiceInterface;
 use App\Service\Category\CategoryPageServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -24,6 +25,16 @@ final class CategoryController extends AbstractController
     public function show($slug, CategoryPageServiceInterface $service): Response
     {
         $posts = $service->getPosts();
-        return $this->render('Category/category.html.twig', ['title' => ucfirst($slug), 'posts' => $posts]);
+        try {
+            $categoryModel = $service->getCategoryInfo($slug);
+        } catch(\LogicException $e){
+           throw $this->createNotFoundException('Supported category does not exist');
+        }
+
+        return $this->render('category/show.html.twig', [
+            'title' => $categoryModel['title'],
+            'posts' => $posts,
+            'description' => $categoryModel['description']
+        ]);
     }
 }

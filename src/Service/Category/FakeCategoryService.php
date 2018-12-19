@@ -20,6 +20,24 @@ use Facebook\WebDriver\Remote\ExecuteMethod;
 final class FakeCategoryService implements CategoryPageServiceInterface
 {
     private const POSTS_COUNT = 3;
+    private $storage = [
+        'it' => [
+            'title' => 'IT news',
+            'description' => 'Main IT news'
+        ],
+        'sport' => [
+            'title' => 'Sport news',
+            'description' => 'Main Sport news'
+        ],
+        'world' => [
+            'title' => 'World news',
+            'description' => 'Main World news'
+        ],
+        'science' => [
+            'title' => 'Science news',
+            'description' => 'Main Science news'
+        ]
+    ];
     /**
      * {@inheritdoc}
      */
@@ -36,5 +54,14 @@ final class FakeCategoryService implements CategoryPageServiceInterface
             $collection->addPost($dto);
         }
         return $collection;
+    }
+
+    public function getCategoryInfo($categoryName): array
+    {
+        if(isset($this->storage[$categoryName])){
+            return $this->storage[$categoryName];
+        } else {
+            throw new \LogicException(sprintf('Category %s does not exist.', $categoryName));
+        }
     }
 }

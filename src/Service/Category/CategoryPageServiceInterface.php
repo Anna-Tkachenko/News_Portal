@@ -22,4 +22,6 @@ interface CategoryPageServiceInterface
      * @return PostsCollection
      */
     public function getPosts(): PostsCollection;
+
+    public function getCategoryInfo($categoryName) :array;
 }

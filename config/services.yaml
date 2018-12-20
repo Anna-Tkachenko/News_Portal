@@ -8,6 +8,7 @@ parameters:
     app.defaultImageName: 'default.png'
     app.imagesRoot: '/img'
     app.dateFormat: 'd-m-Y'
+    app.dataContactFormStorage: 'message.scv'
 
 services:
     # default configuration for services in *this* file
@@ -34,6 +35,11 @@ services:
         arguments:
             - '%app.defaultImageName%'
             - '%app.imagesRoot%'
+
+    App\Service\Contacts\ContactsPageService:
+        class: App\Service\Contacts\ContactsPageService
+        arguments:
+            - '%app.dataContactFormStorage%'
 
     # Aliases
 

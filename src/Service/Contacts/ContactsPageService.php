@@ -11,7 +11,12 @@ namespace App\Service\Contacts;
 
 final class ContactsPageService implements ContactsPageServiceInterface
 {
-    private $path = 'messages.csv';
+    private $path;
+
+    public function __construct(string $defaultPath)
+    {
+        $this->path = $defaultPath;
+    }
 
     public function saveDataToScv($data): void
     {

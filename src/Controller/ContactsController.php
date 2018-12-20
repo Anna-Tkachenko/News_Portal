@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Service\Contacts\ContactFormBuilder;
+use App\Form\ContactFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,7 +17,7 @@ class ContactsController extends AbstractController
 {
     public function index(): Response
     {
-        $form = $this->createForm(ContactFormBuilder::class);
+        $form = $this->createForm(ContactFormType::class);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();

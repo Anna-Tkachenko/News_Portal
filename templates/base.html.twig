@@ -22,7 +22,7 @@
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-white">Follow on Twitter</a></li>
                         <li><a href="#" class="text-white">Like on Facebook</a></li>
-                        <li><a href="contacts" class="text-white">Email us</a></li>
+                        <li><a href="{{ path('contacts') }}" class="text-white">Email us</a></li>
                     </ul>
                 </div>
             </div>
@@ -30,7 +30,7 @@
     </div>
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand d-flex align-items-center">
+            <a href="{{ path('index') }}" class="navbar-brand d-flex align-items-center">
                 <strong>News Portal</strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,20 @@
             </button>
         </div>
     </div>
-    {% block categories %}{% endblock %}
+            <ul class="categories">
+                <li>
+                    <a href="{{ path('category',{'slug': 'world'}) }}">World</a>
+                </li>
+                <li>
+                    <a href="{{ path('category',{'slug': 'it'}) }}">IT</a>
+                </li>
+                <li>
+                    <a href="{{ path('category',{'slug': 'sport'}) }}">Sport</a>
+                </li>
+                <li>
+                    <a href="{{ path('category',{'slug': 'science'}) }}">Science</a>
+                </li>
+            </ul>
 </header>
 
 {% block body %}{% endblock %}

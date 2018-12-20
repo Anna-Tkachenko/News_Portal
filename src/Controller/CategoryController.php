@@ -27,7 +27,7 @@ final class CategoryController extends AbstractController
         try {
             $categoryModel = $service->getCategoryInfo($slug);
         } catch (\LogicException $e) {
-            throw $this->createNotFoundException('Supported category does not exist');
+            throw $this->createNotFoundException("Supported $slug does not exist");
         }
 
         return $this->render('category/show.html.twig', [

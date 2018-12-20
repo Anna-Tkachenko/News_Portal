@@ -16,6 +16,7 @@ final class AppExtension extends AbstractExtension
 {
     private $defaultImageName;
     private $imagesRoot;
+
     public function __construct(string $defaultImageName, string $imagesRoot)
     {
         $this->defaultImageName = $defaultImageName;

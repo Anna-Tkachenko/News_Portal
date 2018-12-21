@@ -11,5 +11,5 @@ namespace App\Service\Contacts;
 
 interface ContactsPageServiceInterface
 {
-    public function saveDataToScv($data): void;
+    public function saveData($data): void;
 }

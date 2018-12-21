@@ -9,21 +9,21 @@
 
 namespace App\Controller;
 
-use App\Form\ContactFormType;
-use App\Service\Contacts\ContactsPageService;
+use App\Form\ContactType;
+use App\Service\Contacts\ContactsPageServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContactsController extends AbstractController
 {
-    public function index(Request $request, ContactsPageService $service): Response
+    public function index(Request $request, ContactsPageServiceInterface $service): Response
     {
-        $form = $this->createForm(ContactFormType::class);
+        $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $service->saveDataToScv($data);
+            $service->saveData($data);
         }
 
         return $this->render('contacts/index.html.twig', [

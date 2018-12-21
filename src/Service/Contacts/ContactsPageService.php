@@ -18,12 +18,12 @@ final class ContactsPageService implements ContactsPageServiceInterface
         $this->path = $defaultPath;
     }
 
-    public function saveDataToScv($data): void
+    public function saveData($data): void
     {
         if (!file_exists($this->path)) {
             touch($this->path);
         }
-        $file = new \SplFileObject($this->path, 'a');
+        $file = new \SplFileObject($this->path, 'a+');
         $file->fputcsv($data);
     }
 }

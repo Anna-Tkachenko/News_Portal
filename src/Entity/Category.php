@@ -31,7 +31,7 @@ class Category
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPublished;
+    private $isPublished = false;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="category", orphanRemoval=true)

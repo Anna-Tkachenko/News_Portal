@@ -9,6 +9,7 @@
 
 namespace App\Service\Category;
 
+use App\Dto\Category;
 use App\Post\PostsCollection;
 
 /**
@@ -19,11 +20,20 @@ use App\Post\PostsCollection;
 interface CategoryPageServiceInterface
 {
     /**
-     * Gets collection of posts for home page.
+     * Gets category by provided category slug.
+     *
+     * @param string $slug
+     *
+     * @return Category
+     */
+    public function getCategoryBySlug(string $slug): Category;
+
+    /**
+     * Gets posts collection for provided category.
+     *
+     * @param Category $category
      *
      * @return PostsCollection
      */
-    public function getPosts(): PostsCollection;
-
-    public function getCategoryInfo($categoryName) :array;
+    public function getPosts(Category $category): PostsCollection;
 }

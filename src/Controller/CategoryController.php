@@ -21,19 +21,19 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class CategoryController extends AbstractController
 {
-    public function show($slug, CategoryPageServiceInterface $service): Response
+    public function show(string $slug, CategoryPageServiceInterface $service): Response
     {
-        $posts = $service->getPosts();
         try {
-            $categoryModel = $service->getCategoryInfo($slug);
+            $category = $service->getCategoryBySlug($slug);
         } catch (\LogicException $e) {
-            throw $this->createNotFoundException('Supported category does not exist');
+            throw $this->createNotFoundException($e->getMessage());
         }
 
+        $posts = $service->getPosts($category);
+
         return $this->render('category/show.html.twig', [
-            'title' => $categoryModel['title'],
+            'category' => $category,
             'posts' => $posts,
-            'description' => $categoryModel['description']
         ]);
     }
 }

@@ -30,8 +30,10 @@ final class DefaultController extends AbstractController
     public function index(HomePageServiceInterface $service): Response
     {
         $posts = $service->getPosts();
+        $categories = $service->getCategories();
         return $this->render('default/index.html.twig', [
             'posts' => $posts,
+            'categories' => $categories,
         ]);
     }
 }

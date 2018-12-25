@@ -9,9 +9,11 @@
 
 namespace App\Service\Category;
 
+use App\Dto\Category;
 use App\Dto\Post;
+use App\Exception\EntityNotFoundException;
 use App\Post\PostsCollection;
-use Facebook\WebDriver\Remote\ExecuteMethod;
+use Faker\Factory;
 
 /**
  * Fake category page service that generates test data.
@@ -21,48 +23,47 @@ use Facebook\WebDriver\Remote\ExecuteMethod;
 final class FakeCategoryService implements CategoryPageServiceInterface
 {
     private const POSTS_COUNT = 3;
-    private $storage = [
+    private const CATEGORIES = [
         'it' => [
-            'title' => 'IT news',
-            'description' => 'Main IT news'
-        ],
-        'sport' => [
-            'title' => 'Sport news',
-            'description' => 'Main Sport news'
+            'name' => 'IT',
         ],
         'world' => [
-            'title' => 'World news',
-            'description' => 'Main World news'
+            'name' => 'World',
         ],
         'science' => [
-            'title' => 'Science news',
-            'description' => 'Main Science news'
-        ]
+            'name' => 'science',
+        ],
+        'sport' => [
+            'name' => 'Sport',
+        ],
     ];
+
+    public function getCategoryBySlug(string $slug): Category
+    {
+        if (!isset(self::CATEGORIES[$slug])) {
+            throw new EntityNotFoundException(\sprintf('Category with slug "%s" not found', $slug));
+        }
+        $faker = Factory::create();
+        $dto = new Category(self::CATEGORIES[$slug]['name'], $faker->sentence);
+        return $dto;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function getPosts(): PostsCollection
+    public function getPosts(Category $category): PostsCollection
     {
         $faker = \Faker\Factory::create();
         $collection = new PostsCollection();
         for ($i = 0; $i < self::POSTS_COUNT; $i++) {
             $dto = new Post(
                 $faker->text,
-                $faker->dateTime
+                $faker->dateTime,
+                $category
             );
             $dto->setImage($faker->imageUrl());
             $collection->addPost($dto);
         }
         return $collection;
-    }
-
-    public function getCategoryInfo($categoryName): array
-    {
-        if (isset($this->storage[$categoryName])) {
-            return $this->storage[$categoryName];
-        } else {
-            throw new \LogicException(sprintf('Category %s does not exist.', $categoryName));
-        }
     }
 }

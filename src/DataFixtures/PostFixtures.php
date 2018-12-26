@@ -1,9 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tkachenko
- * Date: 12/25/18
- * Time: 10:57 PM
+
+/*
+ * This file is part of the News-Portal project.
+ * (c) Anna Tkachenko <tkachenko.anna835@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\DataFixtures;
@@ -12,6 +13,7 @@ use App\Entity\Category;
 use App\Entity\Post;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * Fixtures for post entity.
  *
@@ -34,7 +36,7 @@ class PostFixtures extends Fixture
                 ->setBody($faker->text($faker->boolean ? 300 : 400))
                 ->setCategory($category)
                 ->setShortDescription($faker->text($faker->boolean ? 100 : 150))
-                ->setPublicationDate($faker->boolean(70) ? $faker->dateTimeInInterval('-2 years','+20 days') : null)
+                ->setPublicationDate($faker->boolean(70) ? $faker->dateTimeInInterval('-2 years', '+20 days') : null)
                 ->setImage('default.png');
             ;
             $manager->persist($post);

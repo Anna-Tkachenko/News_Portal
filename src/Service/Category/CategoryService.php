@@ -21,7 +21,7 @@ use App\Repository\Post\PostRepositoryInterface;
 use App\Category\CategoriesCollection;
 
 /**
- * Fake category page service that generates test data.
+ * Category page service that generates test data.
  *
  * @author Anna Tkachenko <tkachenko.anna835@gmail.com>
  */
@@ -47,8 +47,7 @@ final class CategoryService implements CategoryPageServiceInterface
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         PostRepositoryInterface $postRepository
-    )
-    {
+    ) {
         $this->categoryRepository = $categoryRepository;
         $this->postRepository = $postRepository;
     }
@@ -75,15 +74,11 @@ final class CategoryService implements CategoryPageServiceInterface
      */
     public function getPosts(Category $category): PostsCollection
     {
-        $posts = $this->postRepository->findAllIsPublished();
+        $posts = $this->postRepository->findByCategory($category->getName());
         $collection = new PostsCollection();
         $dataMapper = new PostMapper();
         foreach ($posts as $post) {
-            $newPost = $dataMapper->entityToDto($post);
-            $postCategory = $newPost->getCategory();
-            if($postCategory->getName() == $category->getName()){
-                $collection->addPost($newPost);
-            }
+            $collection->addPost($dataMapper->entityToDto($post));
         }
         return $collection;
     }

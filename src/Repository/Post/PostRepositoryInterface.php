@@ -1,13 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tkachenko
- * Date: 12/25/18
- * Time: 11:03 PM
+
+/*
+ * This file is part of the News-Portal project.
+ * (c) Anna Tkachenko <tkachenko.anna835@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Repository\Post;
-
 
 interface PostRepositoryInterface
 {
@@ -19,4 +19,6 @@ interface PostRepositoryInterface
     public function findAllWithCategories();
 
     public function findAllIsPublished();
+
+    public function findByCategory(string $categoryName);
 }

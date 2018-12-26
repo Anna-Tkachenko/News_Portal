@@ -23,8 +23,7 @@ final class HomePageService implements HomePageServiceInterface
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         PostRepositoryInterface $postRepository
-    )
-    {
+    ) {
         $this->categoryRepository = $categoryRepository;
         $this->postRepository = $postRepository;
     }
@@ -48,4 +47,3 @@ final class HomePageService implements HomePageServiceInterface
         return new CategoriesCollection($categories);
     }
 }
-

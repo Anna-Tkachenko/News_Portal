@@ -1,9 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tkachenko
- * Date: 12/25/18
- * Time: 10:58 PM
+
+/*
+ * This file is part of the News-Portal project.
+ * (c) Anna Tkachenko <tkachenko.anna835@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Post;
@@ -11,6 +12,7 @@ namespace App\Post;
 use App\Category\CategoryMapper;
 use App\Dto\Post as PostDto;
 use App\Entity\Post;
+
 /**
  * Data mapper for post entity and DTO.
  *
@@ -18,7 +20,6 @@ use App\Entity\Post;
  */
 final class PostMapper
 {
-
     public function entityToDto(Post $entity): PostDto
     {
         $categoryMapper = new CategoryMapper();

@@ -33,7 +33,7 @@ final class HomePageService implements HomePageServiceInterface
      */
     public function getPosts(): PostsCollection
     {
-        $posts = $this->postRepository->findAllWithCategories();
+        $posts = $this->postRepository->findAllIsPublished();
         $collection = new PostsCollection();
         $dataMapper = new PostMapper();
         foreach ($posts as $post) {

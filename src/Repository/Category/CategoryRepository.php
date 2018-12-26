@@ -31,4 +31,9 @@ class CategoryRepository extends ServiceEntityRepository implements CategoryRepo
             ;
     }
 
+    public function findCategoryBySlug(string $slug)
+    {
+        return $this->findOneBy(['slug' => $slug]);
+    }
+
 }

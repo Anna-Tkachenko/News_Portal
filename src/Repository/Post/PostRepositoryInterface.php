@@ -17,4 +17,6 @@ interface PostRepositoryInterface
      * @return mixed
      */
     public function findAllWithCategories();
+
+    public function findAllIsPublished();
 }

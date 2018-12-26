@@ -38,24 +38,8 @@
             </button>
         </div>
     </div>
-    {% block categories %}
-            <ul class="categories">
-                <li>
-                    <a href="{{ path('category',{'slug': 'world'}) }}">World</a>
-                </li>
-                <li>
-                    <a href="{{ path('category',{'slug': 'it'}) }}">IT</a>
-                </li>
-                <li>
-                    <a href="{{ path('category',{'slug': 'sport'}) }}">Sport</a>
-                </li>
-                <li>
-                    <a href="{{ path('category',{'slug': 'science'}) }}">Science</a>
-                </li>
-            </ul>
-    {% endblock %}
 </header>
-
+{% block categories %}{% endblock %}
 {% block body %}{% endblock %}
 
 <footer class="text-muted">

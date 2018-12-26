@@ -33,6 +33,9 @@ class PostFixtures extends Fixture
                 ->setSlug($faker->slug)
                 ->setBody($faker->text($faker->boolean ? 300 : 400))
                 ->setCategory($category)
+                ->setShortDescription($faker->text($faker->boolean ? 100 : 150))
+                ->setPublicationDate($faker->boolean(70) ? $faker->dateTimeInInterval('-2 years','+20 days') : null)
+                ->setImage('default.png');
             ;
             $manager->persist($post);
         }

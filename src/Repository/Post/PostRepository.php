@@ -33,4 +33,13 @@ class PostRepository extends ServiceEntityRepository implements PostRepositoryIn
             ->getResult()
             ;
     }
+
+    public function findAllIsPublished()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.publicationDate IS NOT NULL')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

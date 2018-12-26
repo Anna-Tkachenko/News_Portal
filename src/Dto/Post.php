@@ -21,10 +21,11 @@ final class Post
     private $publicationDate;
     private $category;
 
-    public function __construct(string $description, \DateTimeInterface $publicationDate, Category $category)
+    public function __construct(string $description, \DateTimeInterface $publicationDate, string $image, Category $category)
     {
         $this->description = $description;
         $this->publicationDate = $publicationDate;
+        $this->image = $image;
         $this->category = $category;
     }
 

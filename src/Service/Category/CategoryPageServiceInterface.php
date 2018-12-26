@@ -11,6 +11,7 @@ namespace App\Service\Category;
 
 use App\Dto\Category;
 use App\Post\PostsCollection;
+use App\Category\CategoriesCollection;
 
 /**
  * Interface of category page service that provides data for category page.
@@ -36,4 +37,6 @@ interface CategoryPageServiceInterface
      * @return PostsCollection
      */
     public function getPosts(Category $category): PostsCollection;
+
+    public function getCategories(): CategoriesCollection;
 }

@@ -24,16 +24,18 @@ final class CategoryController extends AbstractController
     public function show(string $slug, CategoryPageServiceInterface $service): Response
     {
         try {
-            $category = $service->getCategoryBySlug($slug);
+            $currentCategory = $service->getCategoryBySlug($slug);
         } catch (\LogicException $e) {
             throw $this->createNotFoundException($e->getMessage());
         }
 
-        $posts = $service->getPosts($category);
+        $posts = $service->getPosts($currentCategory);
+        $categories = $service->getCategories();
 
         return $this->render('category/show.html.twig', [
-            'category' => $category,
+            'categories' => $categories,
             'posts' => $posts,
+            'currentCategory' => $currentCategory
         ]);
     }
 }

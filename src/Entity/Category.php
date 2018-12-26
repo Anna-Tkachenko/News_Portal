@@ -38,6 +38,11 @@ class Category
      */
     private $posts;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -111,6 +116,18 @@ class Category
                 $posts->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

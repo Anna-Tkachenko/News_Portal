@@ -23,8 +23,9 @@ final class PostMapper
     {
         $categoryMapper = new CategoryMapper();
         return new PostDto(
-            \substr($entity->getBody(), 0, 200),
-            new \DateTime(),
+            $entity->getShortDescription(),
+            $entity->getPublicationDate(),
+            $entity->getImage(),
             $categoryMapper->entityToDto($entity->getCategory())
         );
     }

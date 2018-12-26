@@ -1,31 +1,41 @@
 {%  extends 'base.html.twig' %}
-{% block title %}{{ category.name }}{% endblock %}
+{% block title %}{{ currentCategory.name }}{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="/css/site.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
     <link href="/css/category.css" rel="stylesheet">
 {% endblock %}
+{% block categories %}
+    <ul class="categories">
+        {% for category in categories %}
+            <li>
+                <a href="{{ path('category', {slug: category.slug}) }}">{{ category.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
 {% block body %}
-    <h1 class="category-name">{{ category.name }}</h1>
-    <h2 class="category-description">description</h2>
+    <h1 class="category-name">{{ currentCategory.name }}</h1>
+    <h4 class="category-description">{{ currentCategory.description }}</h4>
     <div class="row mb-2">
         {% for post in posts %}
         <div class="col-md-4">
              <div class="card mb-4 shadow-sm">
-                  <img class="card-img-top" src={{ post.getImage }} alt="">
+                  <img class="card-img-top" src="{{ post.image | imagePath }}" alt="">
                         <div class="card-body">
                              <p class="card-text">
-                                  {{ post.getDescription }}
+                                  {{ post.description }}
                              </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                  <button type="button" class="btn btn-sm btn-outline-secondary">Read</button>
                             </div>
-                         <small class="text-muted">{{ post.getPublicationDate }}</small>
+                         <small class="text-muted">{{ post.publicationDate }}</small>
                          </div>
                          </div>
               </div>
          </div>
         {% endfor %}
+    </div>
 {% endblock %}

@@ -28,7 +28,7 @@ final class CategoryMapper
     {
         return new CategoryDto(
             $entity->getName(),
-            ''
+            $entity->getDescription()
         );
     }
 }

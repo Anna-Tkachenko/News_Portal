@@ -16,21 +16,22 @@ class ContactTypeTest extends TypeTestCase
 {
     public function testSubmitValidData()
     {
-        $formData = array(
+        $formData = [
             'name' => 'name',
             'email' => 'example@mail.com',
             'message' => 'some text'
-        );
+        ];
 
         $form = $this->factory->create(ContactType::class);
         $form->submit($formData);
-        $this->assertTrue($form->isSynchronized());
+
+        self::assertTrue($form->isSynchronized());
 
         $view = $form->createView();
         $children = $view->children;
 
-        foreach (array_keys($formData) as $key) {
-            $this->assertArrayHasKey($key, $children);
+        foreach ($formData as $key=>$data) {
+            self::assertArrayHasKey($key, $children);
         }
     }
 }

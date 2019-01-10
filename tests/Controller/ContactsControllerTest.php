@@ -19,21 +19,10 @@ class ContactsControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/contacts');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter('html:contains("Address")')->count()
-        );
-
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter('html:contains("Phone number")')->count()
-        );
-
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter('html:contains("Email")')->count()
-        );
+        self::assertCount(1,  $crawler->filter('dt#address'));
+        self::assertCount(1,  $crawler->filter('dt#phone'));
+        self::assertCount(1,  $crawler->filter('dt#email'));
     }
 }

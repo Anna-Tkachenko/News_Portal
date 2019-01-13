@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="/css/site.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>{{ post.title }}</h1>
+        <small>{{ post.category.name }}</small>
+        <div>{{ post.body }}</div>
+        <a href="{{ path('post_like', {id: post.id}) }}" id="js-post-like-btn">Like</a>
+        <a href="#" id="js-post-dislike-btn">Dislike</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/post.js') }}"></script>
+{% endblock %}

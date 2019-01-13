@@ -12,7 +12,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Post\PostRepository")
  */
 class Post
 {
@@ -58,6 +58,13 @@ class Post
      * @ORM\Column(type="string", length=255)
      */
     private $image;
+
+    public function __construct(string $title, string $body, Category $category)
+    {
+        $this->title = $title;
+        $this->body = $body;
+        $this->category = $category;
+    }
 
     public function getId(): ?int
     {

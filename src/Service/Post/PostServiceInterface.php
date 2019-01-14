@@ -21,6 +21,4 @@ interface PostServiceInterface
     public function findAllPosts();
 
     public function update(int $id, array $data);
-
-    public function getResponse(Post $post);
 }

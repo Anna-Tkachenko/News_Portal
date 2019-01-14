@@ -9,6 +9,7 @@
 namespace App\Service\Post;
 
 
+use App\Api\ApiMapperInterface;
 use App\Entity\Post;
 use App\Repository\Category\CategoryRepositoryInterface;
 use App\Repository\Post\PostRepositoryInterface;
@@ -19,13 +20,17 @@ final class ApiPostService implements PostServiceInterface
 {
     private $postRepository;
     private $categoryRepository;
+    private $apiMapper;
 
     public function __construct(
         PostRepositoryInterface $postRepository,
-        CategoryRepositoryInterface $categoryRepository)
+        CategoryRepositoryInterface $categoryRepository,
+        ApiMapperInterface $apiMapper
+    )
     {
         $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->apiMapper = $apiMapper;
     }
 
     public function findPost(int $id)
@@ -34,7 +39,7 @@ final class ApiPostService implements PostServiceInterface
         if (empty($post)) {
             throw new NotFoundHttpException(\sprintf('Post with ID %d not found', $id));
         }
-        return $post;
+        return $this->apiMapper->entityToResource($post);
     }
 
     public function create(array $data)
@@ -57,7 +62,8 @@ final class ApiPostService implements PostServiceInterface
         );
 
         $this->postRepository->save($post);
-        return $post;
+
+        return $this->apiMapper->entityToResource($post);
     }
 
     public function delete(int $id): void
@@ -84,20 +90,20 @@ final class ApiPostService implements PostServiceInterface
 
         $this->postRepository->save($post);
 
-        return $post;
+        return $this->apiMapper->entityToResource($post);
     }
 
     public function findAllPosts()
     {
-        return $this->postRepository->findAll();
+        $posts = $this->postRepository->findAll();
+        $response = [];
+
+        foreach($posts as $post){
+            $response[] = $this->apiMapper->entityToResource($post);
+        }
+
+        return $response;
     }
 
-    public function getResponse(Post $post)
-    {
-        return [
-            'id' => $post->getId(),
-            'title' => $post->getTitle(),
-            'body' => $post->getBody(),
-        ];
-    }
+
 }

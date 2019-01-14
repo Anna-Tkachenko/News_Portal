@@ -8,11 +8,13 @@
 
 namespace App\Controller\Api;
 
+use App\Exception\EntityNotFoundException;
 use App\Service\Post\PostServiceInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class PostController extends AbstractFOSRestController
 {
@@ -28,9 +30,7 @@ final class PostController extends AbstractFOSRestController
      */
     public function postPost(Request $request)
     {
-        $post = $this->service->create($request->request->get('data'));
-
-        $response = $this->service->getResponse($post);
+        $response = $this->service->create($request->request->get('data'));
 
         return $this->view($response, Response::HTTP_CREATED);
     }
@@ -40,9 +40,7 @@ final class PostController extends AbstractFOSRestController
      */
     public function getPost(int $id)
     {
-        $post = $this->service->findPost($id);
-
-        $response = $this->service->getResponse($post);
+        $response = $this->service->findPost($id);
 
         return $this->view($response, Response::HTTP_OK);
     }
@@ -52,7 +50,11 @@ final class PostController extends AbstractFOSRestController
      */
     public function deletePost(int $id)
     {
-        $this->service->delete($id);
+        try{
+            $this->service->delete($id);
+        } catch (EntityNotFoundException $e){
+            throw new NotFoundHttpException(\sprintf('Post with ID %d not found', $id));
+        }
 
         return $this->view([], Response::HTTP_NO_CONTENT);
     }
@@ -62,9 +64,7 @@ final class PostController extends AbstractFOSRestController
      */
     public function patchPost(int $id, Request $request)
     {
-        $post = $this->service->update($id, $request->request->get('data'));
-
-        $response = $this->service->getResponse($post);
+        $response = $this->service->update($id, $request->request->get('data'));
 
         return $this->view($response, Response::HTTP_OK);
     }
@@ -74,11 +74,7 @@ final class PostController extends AbstractFOSRestController
      */
     public function getPosts()
     {
-        $posts = $this->service->findAllPosts();
-
-        foreach ($posts as $post){
-            $response[] = $this->service->getResponse($post);
-        }
+        $response = $this->service->findAllPosts();
 
         return $this->view($response, Response::HTTP_OK);
     }

@@ -12,6 +12,7 @@ namespace App\Repository\Post;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method Post|null find($id, $lockMode = null, $lockVersion = null)
@@ -62,5 +63,23 @@ class PostRepository extends ServiceEntityRepository implements PostRepositoryIn
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function delete(int $id): void
+    {
+        $post = $this->find($id);
+        if (empty($post)) {
+            throw new NotFoundHttpException(\sprintf('Post with ID %d not found', $id));
+        }
+        $em = $this->getEntityManager();
+        $em->remove($post);
+        $em->flush();
+    }
+
+    public function save(Post $post): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($post);
+        $em->flush();
     }
 }

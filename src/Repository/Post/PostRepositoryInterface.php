@@ -9,6 +9,8 @@
 
 namespace App\Repository\Post;
 
+use App\Entity\Post;
+
 interface PostRepositoryInterface
 {
     /**
@@ -21,4 +23,8 @@ interface PostRepositoryInterface
     public function findAllIsPublished();
 
     public function findByCategory(string $categoryName);
+
+    public function delete(int $id): void;
+
+    public function save(Post $post): void;
 }

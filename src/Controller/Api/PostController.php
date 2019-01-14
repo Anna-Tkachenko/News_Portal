@@ -8,99 +8,79 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Post;
-use App\Repository\Category\CategoryRepository;
-use App\Repository\Post\PostRepository;
+use App\Service\Post\PostServiceInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class PostController extends AbstractFOSRestController
 {
+    private $service;
+
+    public function __construct(PostServiceInterface $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * @Rest\Post("/post")
      */
-    public function postPost(Request $request, CategoryRepository $categoryRepository)
+    public function postPost(Request $request)
     {
-        $category = $categoryRepository->find($request->request->get('categoryId'));
-        if (empty($category)) {
-            throw new BadRequestHttpException();
-        }
-        $post = new Post(
-            $request->request->get('title'),
-            $request->request->get('body'),
-            $category
-        );
-        $post->setSlug(
-            \strtolower(\str_replace($request->request->get('title'), ' ', '-'))
-        );
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($post);
-        $em->flush();
-        $response = [
-            'id' => $post->getId(),
-            'title' => $post->getTitle(),
-            'body' => $post->getBody(),
-        ];
+        $post = $this->service->create($request->request->get('data'));
+
+        $response = $this->service->getResponse($post);
+
         return $this->view($response, Response::HTTP_CREATED);
     }
 
     /**
      * @Rest\Get("/post/{id}")
      */
-    public function getPost(int $id, PostRepository $postRepository)
+    public function getPost(int $id)
     {
-        $post = $this->findPost($id, $postRepository);
-        $response = [
-            'id' => $post->getId(),
-            'title' => $post->getTitle(),
-            'body' => $post->getBody(),
-        ];
+        $post = $this->service->findPost($id);
+
+        $response = $this->service->getResponse($post);
+
         return $this->view($response, Response::HTTP_OK);
     }
 
     /**
      * @Rest\Delete("/post/{id}")
      */
-    public function deletePost(int $id, PostRepository $postRepository)
+    public function deletePost(int $id)
     {
-        $post = $this->findPost($id, $postRepository);
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($post);
-        $em->flush();
+        $this->service->delete($id);
+
         return $this->view([], Response::HTTP_NO_CONTENT);
     }
 
     /**
      * @Rest\Patch("/post/{id}")
      */
-    public function patchPost(int $id, PostRepository $postRepository, Request $request)
+    public function patchPost(int $id, Request $request)
     {
-        $post = $this->findPost($id, $postRepository);
-        if ($title = $request->request->get('title')) {
-            $post->setTitle($title);
-        }
-        if ($body = $request->request->get('body')) {
-            $post->setBody($body);
-        }
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-        $response = [
-            'id' => $post->getId(),
-            'title' => $post->getTitle(),
-            'body' => $post->getBody(),
-        ];
+        $post = $this->service->update($id, $request->request->get('data'));
+
+        $response = $this->service->getResponse($post);
+
         return $this->view($response, Response::HTTP_OK);
     }
 
-    private function findPost(int $id, PostRepository $postRepository)
+    /**
+     * @Rest\Get("/posts")
+     */
+    public function getPosts()
     {
-        $post = $postRepository->find($id);
-        if (empty($post)) {
-            throw $this->createNotFoundException();
+        $posts = $this->service->findAllPosts();
+
+        foreach ($posts as $post){
+            $response[] = $this->service->getResponse($post);
         }
-        return $post;
+
+        return $this->view($response, Response::HTTP_OK);
     }
+
 }

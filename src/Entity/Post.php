@@ -59,11 +59,13 @@ class Post
      */
     private $image;
 
-    public function __construct(string $title, string $body, Category $category)
+    public function __construct(string $title, string $body, string $shortDescription, Category $category)
     {
         $this->title = $title;
         $this->body = $body;
+        $this->shortDescription = $shortDescription;
         $this->category = $category;
+        $this->image = 'default.png';
     }
 
     public function getId(): ?int
